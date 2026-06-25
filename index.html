@@ -87,6 +87,7 @@ table.prices td:first-child { text-align:left; }
 .pp { font-weight:600; color:#E8C96A; font-size:1.7rem; }
 .pch { font-weight:600; color:#C9A84C; font-size:1.7rem; }
 .footer-note { margin-top:24px; padding-top:18px; border-top:1px solid rgba(212,175,55,0.08); font-size:0.85rem; letter-spacing:1px; color:rgba(212,175,55,0.3); text-transform:uppercase; line-height:1.8; text-align:center; }
+.table-22k-label { margin-top:26px; padding:10px 0 8px; font-family:Georgia,serif; font-size:1.5rem; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:var(--gold); border-bottom:2px solid rgba(212,175,55,0.25); }
 .flash { animation:flashIn 0.5s ease; }
 @keyframes flashIn { 0%{opacity:0.2;} 60%{opacity:1;} 100%{opacity:1;} }
 #debug { position:fixed; bottom:0; left:0; right:0; max-height:130px; overflow-y:auto; background:rgba(0,0,0,0.92); border-top:2px solid #f59e0b; font-family:monospace; font-size:11px; line-height:1.5; padding:8px 14px; z-index:9999; color:#0f0; display:none; }
@@ -145,20 +146,26 @@ table.prices td:first-child { text-align:left; }
         <tbody>
           <tr><td><span class="wt">1 gm</span></td><td><span class="pc" id="g-1gm">—</span></td><td><span class="pp" id="g-1gm-p">—</span></td><td><span class="pch" id="g-1gm-c">—</span></td></tr>
           <tr><td><span class="wt">1.55 gm</span></td><td><span class="pc" id="g-1_55gm">—</span></td><td>—</td><td>—</td></tr>
-          <tr><td><span class="wt">2 gm</span></td><td><span class="pc" id="g-2gm">—</span></td><td>—</td><td>—</td></tr>
           <tr><td><span class="wt">2.5 gm</span></td><td><span class="pc" id="g-2_5gm">—</span></td><td><span class="pp" id="g-2_5gm-p">—</span></td><td>—</td></tr>
           <tr><td><span class="wt">3.11 gm</span></td><td><span class="pc" id="g-3_11gm">—</span></td><td>—</td><td>—</td></tr>
-          <tr><td><span class="wt">4 gm</span></td><td><span class="pc" id="g-4gm">—</span></td><td>—</td><td>—</td></tr>
           <tr><td><span class="wt">5 gm</span></td><td><span class="pc" id="g-5gm">—</span></td><td><span class="pp" id="g-5gm-p">—</span></td><td>—</td></tr>
           <tr><td><span class="wt">7.75 gm</span></td><td><span class="pc" id="g-7_75gm">—</span></td><td>—</td><td>—</td></tr>
           <tr><td><span class="wt">7.8 gm</span></td><td><span class="pc" id="g-7_8gm">—</span></td><td>—</td><td>—</td></tr>
-          <tr><td><span class="wt">8 gm</span></td><td><span class="pc" id="g-8gm">—</span></td><td>—</td><td>—</td></tr>
           <tr><td><span class="wt">10 gm</span></td><td><span class="pc" id="g-10gm">—</span></td><td><span class="pp" id="g-10gm-p">—</span></td><td>—</td></tr>
           <tr><td><span class="wt">10.4 gm</span></td><td><span class="pc" id="g-10_4gm">—</span></td><td>—</td><td>—</td></tr>
           <tr><td><span class="wt">15.55 gm</span></td><td><span class="pc" id="g-15_55gm">—</span></td><td>—</td><td>—</td></tr>
           <tr><td><span class="wt">20 gm</span></td><td><span class="pc" id="g-20gm">—</span></td><td><span class="pp" id="g-20gm-p">—</span></td><td>—</td></tr>
           <tr><td><span class="wt">50 gm</span></td><td><span class="pc" id="g-50gm">—</span></td><td>—</td><td>—</td></tr>
           <tr><td><span class="wt">100 gm</span></td><td><span class="pc" id="g-100gm">—</span></td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <div class="table-22k-label">22K</div>
+      <table class="prices prices-22k">
+        <thead><tr><th>Weight</th><th>Price (CAD)</th></tr></thead>
+        <tbody>
+          <tr><td><span class="wt">2 gm</span></td><td><span class="pc" id="g-2gm">—</span></td></tr>
+          <tr><td><span class="wt">4 gm</span></td><td><span class="pc" id="g-4gm">—</span></td></tr>
+          <tr><td><span class="wt">8 gm</span></td><td><span class="pc" id="g-8gm">—</span></td></tr>
         </tbody>
       </table>
       <div class="footer-note">Prices include Sonali markup · All prices in CAD · Subject to change without notice</div>
