@@ -19,18 +19,14 @@ body::before { content:''; position:fixed; inset:0; pointer-events:none;
              radial-gradient(ellipse 40% 40% at 95% 95%, rgba(212,175,55,0.04) 0%, transparent 50%); }
 .app { display:grid; grid-template-rows:auto auto 1fr; height:100vh; }
 
-/* HEADER (horizontal: logo left, brand center, clock right) */
-header { display:flex; align-items:center; justify-content:space-between; padding:8px 40px;
+/* HEADER (horizontal: logo left, spot prices center, clock right) */
+header { display:flex; align-items:center; justify-content:space-between; padding:10px 36px;
   background:linear-gradient(180deg, rgba(10,8,0,0.98) 0%, rgba(8,8,6,0) 100%);
-  border-bottom:1px solid var(--line); position:relative; z-index:10; }
-.logo img { height:58px; filter:drop-shadow(0 0 16px rgba(212,175,55,0.4)); }
-.brand { text-align:center; line-height:1; }
-.brand-name { font-family:Georgia,serif; font-size:2rem; font-weight:700; letter-spacing:5px; text-transform:uppercase;
-  background:linear-gradient(135deg,var(--gold3) 0%,var(--gold) 40%,var(--gold2) 60%,var(--gold3) 100%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-.brand-sub { margin-top:5px; font-size:0.7rem; letter-spacing:4px; text-transform:uppercase; color:rgba(212,175,55,0.5); }
-.clock-box { text-align:right; min-width:200px; }
-.clock-date { font-size:0.85rem; color:var(--gold); letter-spacing:1px; font-weight:300; }
+  border-bottom:1px solid var(--line); position:relative; z-index:10; gap:24px; }
+.logo img { height:74px; filter:drop-shadow(0 0 16px rgba(212,175,55,0.4)); }
+.brand { display:none; }
+.clock-box { text-align:right; min-width:160px; flex-shrink:0; }
+.clock-date { font-size:0.82rem; color:var(--gold); letter-spacing:1px; font-weight:300; }
 .clock-time { font-size:2rem; font-weight:700; letter-spacing:2px; color:var(--text); font-variant-numeric:tabular-nums; line-height:1.1; }
 .live-row { display:flex; align-items:center; justify-content:flex-end; gap:6px; margin-top:3px; }
 .dot { width:8px; height:8px; border-radius:50%; background:#22c55e; flex-shrink:0; }
@@ -38,44 +34,49 @@ header { display:flex; align-items:center; justify-content:space-between; paddin
 .dot.error { background:#ef4444; animation:none; }
 .dot.wait { background:#f59e0b; animation:blink 1s infinite; }
 @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
-.live-label { font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; color:rgba(212,175,55,0.5); }
+.live-label { font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:rgba(212,175,55,0.5); }
 
 .content { display:contents; }
 
-/* SECTION HEADER with spot prices */
-.section-header { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:12px 26px; padding:10px 40px 8px; border-bottom:1px solid var(--line); }
-.section-icon { width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.95rem; font-weight:700; letter-spacing:1px; }
+/* SPOT PRICES IN HEADER - large and prominent */
+.header-spots { display:flex; align-items:center; justify-content:center; gap:40px; flex:1; }
+.hspot { display:flex; align-items:center; gap:12px; }
+.hspot-icon { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.15rem; font-weight:700; letter-spacing:1px; flex-shrink:0; }
 .gold-icon { background:rgba(212,175,55,0.15); color:var(--gold); border:1px solid rgba(212,175,55,0.3); }
 .silver-icon { background:rgba(200,200,200,0.1); color:var(--silver); border:1px solid rgba(200,200,200,0.25); }
-.section-title { font-family:Georgia,serif; font-size:1.4rem; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:var(--gold); }
-.spot-mini { font-size:1.05rem; letter-spacing:1px; color:var(--muted); margin-left:4px; white-space:nowrap; }
-.spot-mini-val { font-weight:700; font-variant-numeric:tabular-nums; }
-.spot-mini-val.gold { color:var(--gold2); }
-.spot-mini-val.silver { color:var(--silver2); }
+.hspot-label { font-family:Georgia,serif; font-size:1.5rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold); }
+.hspot.silver-spot .hspot-label { color:var(--silver); }
+.hspot-bid { font-size:0.78rem; letter-spacing:1px; text-transform:uppercase; color:var(--muted); }
+.hspot-val { font-size:1.9rem; font-weight:700; font-variant-numeric:tabular-nums; color:var(--gold2); }
+.hspot.silver-spot .hspot-val { color:var(--silver2); }
+.hspot-unit { font-size:0.8rem; color:var(--muted); }
 
-/* THREE OZ CARDS - in a row for landscape */
-.oz-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; padding:12px 40px; border-bottom:1px solid var(--line); background:rgba(212,175,55,0.025); }
-.oz-card { background:rgba(212,175,55,0.06); border:1px solid rgba(212,175,55,0.2); border-radius:10px; padding:12px 22px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:5px; }
+/* (old section-header, kept hidden) */
+.section-header { display:none; }
+
+/* THREE OZ CARDS - in a row for landscape, compact height, big price */
+.oz-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; padding:14px 36px; border-bottom:1px solid var(--line); background:rgba(212,175,55,0.025); }
+.oz-card { background:rgba(212,175,55,0.06); border:1px solid rgba(212,175,55,0.2); border-radius:10px; padding:14px 22px; display:flex; flex-direction:row; align-items:center; justify-content:space-between; gap:14px; }
 .oz-card.featured { background:rgba(212,175,55,0.1); border-color:rgba(212,175,55,0.35); }
 .oz-card.silver-card { background:rgba(200,200,200,0.05); border-color:rgba(200,200,200,0.22); }
-.oz-card-left { display:flex; flex-direction:column; align-items:center; gap:3px; }
-.oz-card-eyebrow { font-size:1rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(212,175,55,0.9); text-align:center; }
-.oz-card-footer { font-size:0.78rem; font-weight:600; color:rgba(212,175,55,0.55); letter-spacing:2px; text-transform:uppercase; }
-.oz-card-price { font-family:Georgia,serif; font-size:3.6rem; font-weight:700; color:var(--gold2); line-height:1; font-variant-numeric:tabular-nums; }
+.oz-card-left { display:flex; flex-direction:column; align-items:flex-start; gap:3px; }
+.oz-card-eyebrow { font-size:0.92rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:rgba(212,175,55,0.9); text-align:left; }
+.oz-card-footer { font-size:0.72rem; font-weight:600; color:rgba(212,175,55,0.55); letter-spacing:2px; text-transform:uppercase; }
+.oz-card-price { font-family:Georgia,serif; font-size:4.4rem; font-weight:700; color:var(--gold2); line-height:1; font-variant-numeric:tabular-nums; white-space:nowrap; }
 .oz-card.featured .oz-card-price { color:#FFE566; }
 
 /* TABLES in 2 columns for landscape */
-.tables-wrap { overflow:hidden; padding:12px 36px 12px; display:grid; grid-template-columns:2.7fr 1fr; gap:28px; align-content:start; }
+.tables-wrap { overflow:hidden; padding:14px 36px 12px; display:grid; grid-template-columns:2.9fr 1fr; gap:24px; align-content:start; }
 .table-group-label { font-size:0.62rem; letter-spacing:3px; text-transform:uppercase; color:rgba(212,175,55,0.4); padding:0 0 8px; border-bottom:1px solid rgba(212,175,55,0.12); margin-bottom:4px; }
-table.prices { width:100%; border-collapse:collapse; }
-table.prices th { font-size:1rem; letter-spacing:0.5px; text-transform:uppercase; color:var(--muted); font-weight:400; padding:7px 6px; text-align:right; border-bottom:2px solid rgba(212,175,55,0.2); }
+table.prices { width:100%; border-collapse:collapse; table-layout:fixed; }
+table.prices th { font-size:1.05rem; letter-spacing:0.5px; text-transform:uppercase; color:rgba(212,175,55,0.6); font-weight:600; padding:7px 4px; text-align:right; border-bottom:2px solid rgba(212,175,55,0.2); }
 table.prices th:first-child { text-align:left; }
-table.prices td { padding:6px 6px; text-align:right; font-variant-numeric:tabular-nums; border-bottom:1px solid rgba(255,255,255,0.05); }
+table.prices td { padding:6px 4px; text-align:right; font-variant-numeric:tabular-nums; border-bottom:1px solid rgba(255,255,255,0.05); }
 table.prices td:first-child { text-align:left; }
-.wt { font-weight:600; color:var(--text); font-size:1.9rem; }
-.pc { font-weight:700; color:var(--gold2); font-size:2.05rem; }
-.pp { font-weight:600; color:#E8C96A; font-size:1.9rem; }
-.pch { font-weight:600; color:#C9A84C; font-size:1.9rem; }
+.wt { font-weight:700; color:#FFFFFF; font-size:2.1rem; }
+.pc { font-weight:700; color:var(--gold2); font-size:2.15rem; }
+.pp { font-weight:600; color:#E8C96A; font-size:2rem; }
+.pch { font-weight:600; color:#C9A84C; font-size:2rem; }
 .footer-note { grid-column:1 / -1; margin-top:4px; padding-top:10px; border-top:1px solid rgba(212,175,55,0.08); font-size:0.72rem; letter-spacing:1px; color:rgba(212,175,55,0.3); text-transform:uppercase; line-height:1.6; text-align:center; }
 .table-22k-label { margin-top:0; padding:0 0 8px; font-family:Georgia,serif; font-size:1.7rem; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:var(--gold); border-bottom:2px solid rgba(212,175,55,0.25); }
 .flash { animation:flashIn 0.5s ease; }
@@ -94,9 +95,21 @@ table.prices td:first-child { text-align:left; }
 <div class="app">
   <header>
     <div class="logo"><img id="logo-img" src="" alt="Sonali Jewellers"></div>
-    <div class="brand">
-      <div class="brand-name">Sonali Jewellers</div>
-      <div class="brand-sub">Live Precious Metal Prices &nbsp;·&nbsp; Calgary, AB</div>
+    <div class="header-spots">
+      <div class="hspot">
+        <div class="hspot-icon gold-icon">Au</div>
+        <div>
+          <div class="hspot-label">Gold</div>
+          <div><span class="hspot-bid">BID</span> <span class="hspot-val" id="spot-gold-oz">—</span> <span class="hspot-unit">CAD/oz</span></div>
+        </div>
+      </div>
+      <div class="hspot silver-spot">
+        <div class="hspot-icon silver-icon">Ag</div>
+        <div>
+          <div class="hspot-label">Silver</div>
+          <div><span class="hspot-bid">BID</span> <span class="hspot-val" id="spot-silver-oz">—</span> <span class="hspot-unit">CAD/oz</span></div>
+        </div>
+      </div>
     </div>
     <div class="clock-box">
       <div class="clock-date" id="cl-date">—</div>
@@ -106,12 +119,6 @@ table.prices td:first-child { text-align:left; }
   </header>
 
   <div class="content">
-    <div class="section-header">
-      <div class="section-icon gold-icon">Au</div><div class="section-title">Gold</div>
-      <span class="spot-mini">BID <span id="spot-gold-oz" class="spot-mini-val gold">—</span> CAD/oz</span>
-      <div class="section-icon silver-icon" style="margin-left:24px;">Ag</div><div class="section-title" style="color:var(--silver)">Silver</div>
-      <span class="spot-mini">BID <span id="spot-silver-oz" class="spot-mini-val silver">—</span> CAD/oz</span>
-    </div>
 
     <!-- THREE OZ CARDS: Gold Standard, Gold Pamp, Silver -->
     <div class="oz-row">
