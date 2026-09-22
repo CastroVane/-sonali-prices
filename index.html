@@ -247,7 +247,7 @@ function render(goldBidCAD, silverBidCAD, fxRate){
 }
 function setStatus(s,l){document.getElementById('status-dot').className='dot '+s;document.getElementById('status-label').textContent=l;}
 
-// ── FX: open.er-api.com (primary) + proxy fallback ──
+// ── FX: Yahoo intradia (proxy) → Banco de Canada → fuentes diarias ──
 let lastGold=null,lastSilver=null,lastFX=null,fxCounter=0;
 const PROXY='https://api.allorigins.win/raw?url=';
 
@@ -259,19 +259,24 @@ async function tryFetch(url,useProxy){
 }
 
 async function getFX(){
-  // jsDelivr CDN — open CORS, no key, no limits. Format: { date, usd: { cad: 1.42 } }
+  // 2026-09-22: primero tasa INTRADIA (Yahoo CAD=X, via proxy porque no permite CORS),
+  // luego Banco de Canada (oficial diaria 16:30 ET, CORS abierto) y al final las
+  // fuentes diarias de siempre. Las diarias publican UNA tasa por dia y a media
+  // tarde se alejan 0.3-0.5% del mercado (~$15-20 CAD/oz en oro).
   const sources=[
-    {url:'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json', pick:d=>d&&d.usd&&d.usd.cad},
-    {url:'https://latest.currency-api.pages.dev/v1/currencies/usd.json', pick:d=>d&&d.usd&&d.usd.cad},
-    {url:'https://open.er-api.com/v6/latest/USD', pick:d=>d&&d.rates&&d.rates.CAD},
+    {name:'Yahoo intradia', url:'https://query1.finance.yahoo.com/v8/finance/chart/CAD=X?interval=1m&range=1d', pick:d=>d&&d.chart&&d.chart.result&&d.chart.result[0]&&d.chart.result[0].meta&&d.chart.result[0].meta.regularMarketPrice},
+    {name:'Banco de Canada', url:'https://www.bankofcanada.ca/valet/observations/FXUSDCAD/json?recent=1', pick:d=>{const o=d&&d.observations&&d.observations[d.observations.length-1];return o&&o.FXUSDCAD&&Number(o.FXUSDCAD.v);}},
+    {name:'fawazahmed0 diaria', url:'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json', pick:d=>d&&d.usd&&d.usd.cad},
+    {name:'currency-api diaria', url:'https://latest.currency-api.pages.dev/v1/currencies/usd.json', pick:d=>d&&d.usd&&d.usd.cad},
+    {name:'er-api diaria', url:'https://open.er-api.com/v6/latest/USD', pick:d=>d&&d.rates&&d.rates.CAD},
   ];
   for(const s of sources){
     for(const useProxy of [false,true]){
       try{
         const d=await tryFetch(s.url,useProxy);
         const v=s.pick(d);
-        if(v){log('FX OK'+(useProxy?' (proxy)':'')+': '+v.toFixed(4),'ok');return v;}
-      }catch(e){log('FX'+(useProxy?' proxy':'')+' falló: '+e.message,'warn');}
+        if(v&&v>1&&v<2){log('FX '+s.name+(useProxy?' (proxy)':'')+': '+v.toFixed(4),'ok');return v;}
+      }catch(e){log('FX '+s.name+(useProxy?' proxy':'')+' falló: '+e.message,'warn');}
     }
   }
   return null;
@@ -289,7 +294,7 @@ async function getMetal(symbol,label){
 }
 async function update(){
   try{
-    if(!lastFX||fxCounter<=0){const fx=await getFX();if(fx)lastFX=fx;fxCounter=60;}
+    if(!lastFX||fxCounter<=0){const fx=await getFX();if(fx)lastFX=fx;fxCounter=30;} // FX cada ~5 min
     fxCounter--;
     if(!lastFX){setStatus('error','Sin tipo de cambio · reintentando');return;}
     const goldUSD=await getMetal('XAU','Gold');
