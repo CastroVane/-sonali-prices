@@ -113,6 +113,77 @@ table.prices td:first-child { text-align:left; }
 #debug-header { color:#f59e0b; font-weight:bold; margin-bottom:4px; display:flex; justify-content:space-between; }
 #debug-toggle { position:fixed; bottom:8px; right:14px; z-index:10000; background:rgba(245,158,11,0.85); color:#000; border:none; padding:4px 10px; font-size:11px; font-weight:bold; cursor:pointer; border-radius:4px; opacity:0.5; }
 #debug-toggle:hover { opacity:1; }
+
+/* ── TEMAS CLAROS con los colores del logo (?tema=a | ?tema=b) ──
+   dorado logo #C9962B → #F0D27A, cafe "JEWELLERS" #7A5418 */
+html.tema-a, html.tema-b { --gold:#B8862B; --line:rgba(184,134,43,0.28); --muted:rgba(90,62,20,0.6); }
+html.tema-a body::before, html.tema-b body::before { display:none; }
+html.tema-a .hspot-label, html.tema-b .hspot-label { color:#B8862B; }
+html.tema-a .hspot.silver-spot .hspot-label, html.tema-b .hspot.silver-spot .hspot-label { color:#8A8A8A; }
+html.tema-a .hspot-val, html.tema-b .hspot-val { color:#7A5418; }
+html.tema-a .hspot.silver-spot .hspot-val, html.tema-b .hspot.silver-spot .hspot-val { color:#5E5E5E; }
+html.tema-a .clock-time, html.tema-b .clock-time { color:#3B2A12; }
+html.tema-a .clock-date, html.tema-b .clock-date { color:#B8862B; }
+html.tema-a .live-label, html.tema-b .live-label { color:rgba(122,84,24,0.6); }
+html.tema-a .gold-icon, html.tema-b .gold-icon { background:rgba(201,150,43,0.12); border-color:rgba(184,134,43,0.45); color:#B8862B; }
+html.tema-a .silver-icon, html.tema-b .silver-icon { background:#F1F1F1; border-color:#CFCFCF; color:#7A7A7A; }
+html.tema-a .logo img, html.tema-b .logo img { filter:none; }
+html.tema-a .wt, html.tema-b .wt { color:#3B2A12; }
+html.tema-a .pc, html.tema-b .pc { color:#7A5418; }
+html.tema-a .pp, html.tema-b .pp { color:#B8862B; }
+html.tema-a .pch, html.tema-b .pch { color:#A07A3A; }
+html.tema-a table.prices th, html.tema-b table.prices th { color:#B8862B; border-bottom-color:rgba(184,134,43,0.35); }
+html.tema-a table.prices td, html.tema-b table.prices td,
+html.tema-a .gram-jewelry, html.tema-b .gram-jewelry { border-bottom-color:rgba(122,84,24,0.12); }
+html.tema-a .footer-note, html.tema-b .footer-note { color:rgba(122,84,24,0.55); }
+html.tema-a .silver-card .oz-card-eyebrow, html.tema-b .silver-card .oz-card-eyebrow { color:#6E6E6E !important; }
+html.tema-a .silver-card .oz-card-footer, html.tema-b .silver-card .oz-card-footer { color:#9A9A9A !important; }
+html.tema-a #silver-big, html.tema-b #silver-big { color:#5E5E5E !important; }
+
+/* A: blanco limpio, tarjetas con borde dorado fino */
+html.tema-a, html.tema-a body { background:#FFFFFF; color:#3B2A12; }
+html.tema-a header { background:#FFFFFF; border-bottom:2px solid rgba(184,134,43,0.35); }
+html.tema-a .oz-row { background:#FFFFFF; }
+html.tema-a .oz-card { background:#FFFFFF; border:1.5px solid rgba(184,134,43,0.45); box-shadow:0 2px 10px rgba(122,84,24,0.08); }
+html.tema-a .oz-card.featured { background:#FCF6E8; border-color:#C9962B; }
+html.tema-a .oz-card.silver-card { background:#FAFAFA; border-color:#D6D6D6; }
+html.tema-a .oz-card-eyebrow { color:#B8862B; }
+html.tema-a .oz-card-footer { color:rgba(122,84,24,0.6); }
+html.tema-a .oz-card-price, html.tema-a .oz-card.featured .oz-card-price { color:#7A5418; }
+html.tema-a #g-1oz-pamp { color:#B8862B !important; }
+
+/* B: marfil calido, tarjetas de oro con degradado del logo */
+html.tema-b, html.tema-b body { background:#FBF7EE; color:#3B2A12; }
+html.tema-b header { background:#FFFFFF; border-bottom:3px solid #C9962B; }
+html.tema-b .oz-row { background:#FBF7EE; border-bottom-color:rgba(184,134,43,0.3); }
+html.tema-b .oz-card { background:linear-gradient(135deg,#B8862B 0%,#E9C766 50%,#B8862B 100%); border:none; box-shadow:0 3px 12px rgba(122,84,24,0.18); }
+html.tema-b .oz-card.featured { background:linear-gradient(135deg,#A8761F 0%,#F0D27A 50%,#A8761F 100%); }
+html.tema-b .oz-card.silver-card { background:linear-gradient(135deg,#A9A9A9 0%,#EDEDED 50%,#A9A9A9 100%); }
+html.tema-b .oz-card-eyebrow { color:#3B2A12; }
+html.tema-b .oz-card-footer { color:rgba(59,42,18,0.7); }
+html.tema-b .oz-card-price, html.tema-b .oz-card.featured .oz-card-price { color:#3B2A12; }
+html.tema-b #g-1oz-pamp { color:#3B2A12 !important; }
+html.tema-b .silver-card .oz-card-eyebrow { color:#333 !important; }
+html.tema-b .silver-card .oz-card-footer { color:#555 !important; }
+html.tema-b #silver-big { color:#2E2E2E !important; }
+html.tema-b table.prices thead th { background:#F3E6C4; }
+html.tema-b table.prices tbody tr:nth-child(even) td { background:rgba(201,150,43,0.06); }
+
+/* C y D: base B, titulos de tabla bien visibles */
+html.tema-c table.prices th, html.tema-d table.prices th { font-size:1.3rem; font-weight:800; letter-spacing:1.5px; padding:12px 8px; border-bottom:none; }
+html.tema-c table.prices th:first-child, html.tema-d table.prices th:first-child { border-radius:6px 0 0 6px; }
+html.tema-c table.prices th:last-child, html.tema-d table.prices th:last-child { border-radius:0 6px 6px 0; }
+html.tema-c .table-22k-label, html.tema-d .table-22k-label { font-size:1.9rem; border-bottom:none; padding-bottom:10px; }
+
+/* C: banda de titulos con degradado dorado del logo, texto cafe oscuro */
+html.tema-c table.prices thead th { background:linear-gradient(180deg,#F0D27A 0%,#C9962B 100%); color:#3B2A12; }
+html.tema-c .table-22k-label { color:#7A5418; border-bottom:3px solid #C9962B; margin-bottom:10px; }
+
+/* D: banda de titulos cafe del logo, texto dorado claro; filas mas marcadas */
+html.tema-d table.prices thead th { background:#5C3D10; color:#F5E1A4; }
+html.tema-d .table-22k-label { color:#5C3D10; }
+html.tema-d table.prices tbody tr:nth-child(even) td { background:rgba(201,150,43,0.12); }
+html.tema-d header { border-bottom:4px solid #5C3D10; }
 </style>
 </head>
 <body>
@@ -134,6 +205,10 @@ table.prices td:first-child { text-align:left; }
   else{try{g=localStorage.getItem(KEY);}catch(e){}}
   if(g===null||g===undefined) g='90';
   apply(g);
+  // Tema por defecto: C (marfil, tarjetas y titulos dorados). ?tema=oscuro = el diseno negro original.
+  var tema=new URLSearchParams(location.search).get('tema')||'c';
+  if(tema==='a'||tema==='b') document.documentElement.classList.add('tema-'+tema);
+  if(tema==='c'||tema==='d') document.documentElement.classList.add('tema-b','tema-'+tema);
   document.getElementById('rotate-toggle').onclick=function(){
     var next={'0':'90','90':'270','270':'0'}[g||'0']||'0';
     g=next; try{localStorage.setItem(KEY,g);}catch(e){}
