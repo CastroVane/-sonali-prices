@@ -32,11 +32,8 @@ html.vertical .oz-card { padding:12px 26px; }
 html.vertical .oz-card-eyebrow { font-size:1.1rem; }
 html.vertical .tables-wrap { grid-template-columns:1fr 1fr; padding:14px 32px 12px; row-gap:18px; }
 html.vertical .table-col-main { grid-column:1 / -1; }
-html.vertical .table-col-22k { grid-column:1 / -1; display:grid; grid-template-columns:1fr 1fr; column-gap:32px; align-content:start; }
-html.vertical .table-col-22k .table-22k-label:first-child { grid-column:1; grid-row:1; }
-html.vertical .prices-22k { grid-column:1; grid-row:2; }
-html.vertical .gram-jewelry-label { grid-column:2; grid-row:1; margin-top:0; }
-html.vertical .gram-jewelry { grid-column:2; grid-row:2; align-self:start; padding-top:52px; }
+html.vertical .table-col-22k { grid-column:1 / -1; display:grid; grid-template-columns:1fr 1fr; column-gap:24px; align-items:start; }
+html.vertical .price-box + .price-box { margin-top:0; }
 html.vertical table.prices td { padding:12px 4px; }
 html.vertical .hspot-val { font-size:2.1rem; }
 html.vertical .hspot-label { font-size:1.6rem; }
@@ -104,8 +101,11 @@ table.prices td:first-child { text-align:left; }
 .pch { font-weight:600; color:#C9A84C; font-size:2rem; }
 .footer-note { grid-column:1 / -1; margin-top:4px; padding-top:10px; border-top:1px solid rgba(212,175,55,0.08); font-size:0.72rem; letter-spacing:1px; color:rgba(212,175,55,0.3); text-transform:uppercase; line-height:1.6; text-align:center; }
 .table-22k-label { margin-top:0; padding:0 0 8px; font-family:Georgia,serif; font-size:1.7rem; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:var(--gold); border-bottom:2px solid rgba(212,175,55,0.25); }
-.gram-jewelry-label { margin-top:22px; letter-spacing:3px; }
-.gram-jewelry { display:flex; justify-content:space-between; align-items:baseline; padding:8px 4px; border-bottom:1px solid rgba(255,255,255,0.05); font-variant-numeric:tabular-nums; }
+.gram-jewelry-label { letter-spacing:3px; }
+/* Recuadros independientes para 22K y Gram Jewelry */
+.price-box { border:2px solid rgba(212,175,55,0.45); border-radius:12px; padding:14px 16px 8px; background:rgba(212,175,55,0.04); }
+.price-box + .price-box { margin-top:18px; }
+.price-box table.prices tbody tr:last-child td { border-bottom:none; }
 .flash { animation:flashIn 0.5s ease; }
 @keyframes flashIn { 0%{opacity:0.2;} 60%{opacity:1;} 100%{opacity:1;} }
 #debug { position:fixed; bottom:0; left:0; right:0; max-height:130px; overflow-y:auto; background:rgba(0,0,0,0.92); border-top:2px solid #f59e0b; font-family:monospace; font-size:11px; line-height:1.5; padding:8px 14px; z-index:9999; color:#0f0; display:none; }
@@ -133,8 +133,8 @@ html.tema-a .pc, html.tema-b .pc { color:#7A5418; }
 html.tema-a .pp, html.tema-b .pp { color:#B8862B; }
 html.tema-a .pch, html.tema-b .pch { color:#A07A3A; }
 html.tema-a table.prices th, html.tema-b table.prices th { color:#B8862B; border-bottom-color:rgba(184,134,43,0.35); }
-html.tema-a table.prices td, html.tema-b table.prices td,
-html.tema-a .gram-jewelry, html.tema-b .gram-jewelry { border-bottom-color:rgba(122,84,24,0.12); }
+html.tema-a table.prices td, html.tema-b table.prices td { border-bottom-color:rgba(122,84,24,0.12); }
+html.tema-a .price-box, html.tema-b .price-box { background:#FFFFFF; border-color:#C9962B; box-shadow:0 3px 12px rgba(122,84,24,0.12); }
 html.tema-a .footer-note, html.tema-b .footer-note { color:rgba(122,84,24,0.55); }
 html.tema-a .silver-card .oz-card-eyebrow, html.tema-b .silver-card .oz-card-eyebrow { color:#6E6E6E !important; }
 html.tema-a .silver-card .oz-card-footer, html.tema-b .silver-card .oz-card-footer { color:#9A9A9A !important; }
@@ -252,11 +252,11 @@ html.tema-d header { border-bottom:4px solid #5C3D10; }
         <div class="oz-card-price" id="g-1oz">—</div>
       </div>
       <div class="oz-card">
-        <div class="oz-card-left"><div class="oz-card-eyebrow">Gold · 1 Troy Ounce · Pamp / Diwali</div><div class="oz-card-footer">CAD · +$100</div></div>
+        <div class="oz-card-left"><div class="oz-card-eyebrow">Gold · 1 Troy Ounce · Pamp / Diwali</div><div class="oz-card-footer">CAD · +$50</div></div>
         <div class="oz-card-price" id="g-1oz-pamp" style="color:#E8C96A;">—</div>
       </div>
       <div class="oz-card silver-card">
-        <div class="oz-card-left"><div class="oz-card-eyebrow" style="color:rgba(220,220,220,0.9)">Silver · 1 Troy Ounce</div><div class="oz-card-footer" style="color:rgba(200,200,200,0.45)">CAD · +$20</div></div>
+        <div class="oz-card-left"><div class="oz-card-eyebrow" style="color:rgba(220,220,220,0.9)">Silver · 1 Troy Ounce</div><div class="oz-card-footer" style="color:rgba(200,200,200,0.45)">CAD · +$15</div></div>
         <div class="oz-card-price" id="silver-big" style="color:var(--silver2);">—</div>
       </div>
     </div>
@@ -284,6 +284,7 @@ html.tema-d header { border-bottom:4px solid #5C3D10; }
       </table>
       </div>
       <div class="table-col-22k">
+      <div class="price-box">
       <div class="table-22k-label">22K</div>
       <table class="prices prices-22k">
         <thead><tr><th>Weight</th><th>Standard</th></tr></thead>
@@ -293,8 +294,16 @@ html.tema-d header { border-bottom:4px solid #5C3D10; }
           <tr><td><span class="wt">8 gm</span></td><td><span class="pc" id="g-8gm">—</span></td></tr>
         </tbody>
       </table>
+      </div>
+      <div class="price-box">
       <div class="table-22k-label gram-jewelry-label">Gram Jewelry</div>
-      <div class="gram-jewelry"><span class="wt">1 gm</span><span class="pc" id="g-jewelry">—</span></div>
+      <table class="prices prices-jewelry">
+        <thead><tr><th>Weight</th><th>Price</th></tr></thead>
+        <tbody>
+          <tr><td><span class="wt">1 gm</span></td><td><span class="pc" id="g-jewelry">—</span></td></tr>
+        </tbody>
+      </table>
+      </div>
       </div>
       <div class="footer-note">Prices include Sonali markup · All prices in CAD · Subject to change without notice</div>
     </div>
@@ -335,7 +344,7 @@ function C(v){return '$'+v.toLocaleString('en-CA',{minimumFractionDigits:2,maxim
 function calc(spot1oz){
   const g=spot1oz/31.1;
   return {
-    oz1:spot1oz, oz1pamp:spot1oz+100,
+    oz1:spot1oz, oz1pamp:spot1oz+50,
     gm1:g*0.41+g+2, gm1p:g*0.41+g+2+10, gm1c:g*0.41+g+2-10,
     gm2:g*2*0.27+g*2-7,
     gm2_5:g*2.5*0.19+g*2.5+50, gm2_5p:g*2.5*0.19+g*2.5+50+20,
@@ -371,7 +380,7 @@ function render(goldBidCAD, silverBidCAD, fxRate){
   setTxt('g-10_4gm',C(p.gm10_4)); setTxt('g-15_55gm',C(p.gm15_55));
   setTxt('g-50gm',C(p.gm50)); setTxt('g-100gm',C(p.gm100));
   setTxt('g-jewelry',C(p.jewelry));
-  setTxt('silver-big',C(silverBidCAD+20));
+  setTxt('silver-big',C(silverBidCAD+15));
   document.querySelectorAll('.pc,.pp,.pch,.oz-card-price,.silver-big').forEach(el=>{el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');});
 }
 function setStatus(s,l){document.getElementById('status-dot').className='dot '+s;document.getElementById('status-label').textContent=l;}
