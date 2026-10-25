@@ -79,6 +79,8 @@ table.prices td:first-child { text-align:left; }
 .pch { font-weight:600; color:#C9A84C; font-size:2rem; }
 .footer-note { grid-column:1 / -1; margin-top:4px; padding-top:10px; border-top:1px solid rgba(212,175,55,0.08); font-size:0.72rem; letter-spacing:1px; color:rgba(212,175,55,0.3); text-transform:uppercase; line-height:1.6; text-align:center; }
 .table-22k-label { margin-top:0; padding:0 0 8px; font-family:Georgia,serif; font-size:1.7rem; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:var(--gold); border-bottom:2px solid rgba(212,175,55,0.25); }
+.gram-jewelry-label { margin-top:22px; letter-spacing:3px; }
+.gram-jewelry { display:flex; justify-content:space-between; align-items:baseline; padding:8px 4px; border-bottom:1px solid rgba(255,255,255,0.05); font-variant-numeric:tabular-nums; }
 .flash { animation:flashIn 0.5s ease; }
 @keyframes flashIn { 0%{opacity:0.2;} 60%{opacity:1;} 100%{opacity:1;} }
 #debug { position:fixed; bottom:0; left:0; right:0; max-height:130px; overflow-y:auto; background:rgba(0,0,0,0.92); border-top:2px solid #f59e0b; font-family:monospace; font-size:11px; line-height:1.5; padding:8px 14px; z-index:9999; color:#0f0; display:none; }
@@ -168,6 +170,8 @@ table.prices td:first-child { text-align:left; }
           <tr><td><span class="wt">8 gm</span></td><td><span class="pc" id="g-8gm">—</span></td></tr>
         </tbody>
       </table>
+      <div class="table-22k-label gram-jewelry-label">Gram Jewelry</div>
+      <div class="gram-jewelry"><span class="wt">1 gm</span><span class="pc" id="g-jewelry">—</span></div>
       </div>
       <div class="footer-note">Prices include Sonali markup · All prices in CAD · Subject to change without notice</div>
     </div>
@@ -225,6 +229,7 @@ function calc(spot1oz){
     gm15_55:g*15.55*0.115+g*15.55+8,
     gm50:g*50+150,
     gm100:g*100+150,
+    jewelry:g+45, // Gram Jewelry: precio del gramo (spot +2% ÷ 31.1) + $45 CAD
   };
 }
 function setTxt(id,v){const el=document.getElementById(id); if(el) el.textContent=v;}
@@ -242,6 +247,7 @@ function render(goldBidCAD, silverBidCAD, fxRate){
   setTxt('g-7_75gm',C(p.gm7_75)); setTxt('g-7_8gm',C(p.gm7_8));
   setTxt('g-10_4gm',C(p.gm10_4)); setTxt('g-15_55gm',C(p.gm15_55));
   setTxt('g-50gm',C(p.gm50)); setTxt('g-100gm',C(p.gm100));
+  setTxt('g-jewelry',C(p.jewelry));
   setTxt('silver-big',C(silverBidCAD+20));
   document.querySelectorAll('.pc,.pp,.pch,.oz-card-price,.silver-big').forEach(el=>{el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');});
 }
