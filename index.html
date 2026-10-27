@@ -22,8 +22,8 @@ body::before { content:''; position:fixed; inset:0; pointer-events:none;
 /* MODO VERTICAL (TV montado de lado, sin opcion de rotar): la pagina gira sola.
    ?girar=90 o ?girar=270 en la URL, o el boton "Girar" (se recuerda en el navegador). */
 html.vertical .app { position:fixed; top:0; left:0; width:100vh; height:100vw; transform-origin:top left; }
-html.vertical.r90 .app { transform:rotate(90deg) translateY(-100%); }
-html.vertical.r270 .app { transform:rotate(-90deg) translateX(-100%); }
+html.vertical.r90 .app { transform:scale(var(--s,1)) rotate(90deg) translateY(-100%); }
+html.vertical.r270 .app { transform:scale(var(--s,1)) rotate(-90deg) translateX(-100%); }
 html.vertical header { padding:14px 28px; gap:18px; }
 html.vertical .header-spots { gap:22px; justify-content:space-evenly; }
 html.vertical .hspot { gap:8px; }
@@ -214,7 +214,7 @@ html.tema-d header { border-bottom:4px solid #5C3D10; }
   document.getElementById('rotate-toggle').onclick=function(){
     var next={'0':'90','90':'270','270':'0'}[g||'0']||'0';
     g=next; try{localStorage.setItem(KEY,g);}catch(e){}
-    apply(g);
+    apply(g); if(window.fitApp) fitApp();
   };
 })();
 </script>
@@ -379,6 +379,15 @@ function setTxt(id,v){const el=document.getElementById(id); if(el) el.textConten
 function fitApp(){
   const a=document.querySelector('.app'), t=document.querySelector('.tables-wrap'), h=document.documentElement;
   h.style.fontSize='';
+  // Vertical: el diseno mide 1080 de ancho y se escala al tamano real de la pantalla,
+  // asi llena todo el TV aunque el navegador tenga zoom (p. ej. 75%) o barra lateral.
+  if(h.classList.contains('vertical')){
+    const s=innerHeight/1080;
+    h.style.setProperty('--s',s);
+    a.style.width='1080px'; a.style.height=(innerWidth/s)+'px';
+  } else {
+    h.style.removeProperty('--s'); a.style.width=''; a.style.height='';
+  }
   let fs=parseFloat(getComputedStyle(h).fontSize);
   const sobra=()=>a.scrollHeight>a.clientHeight+1||(t&&t.scrollHeight>t.clientHeight+1);
   while(sobra() && fs>12){fs-=0.25; h.style.fontSize=fs+'px';}
