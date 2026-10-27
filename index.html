@@ -303,6 +303,7 @@ html.tema-d header { border-bottom:4px solid #5C3D10; }
         <thead><tr><th>Type</th><th>Per gram</th></tr></thead>
         <tbody>
           <tr><td><span class="wt">22K Gram Jewelry</span></td><td><span class="pc" id="g-jewelry">—</span></td></tr>
+          <tr><td><span class="wt">21K Gram Jewelry</span></td><td><span class="pc" id="g-jewelry21">—</span></td></tr>
           <tr><td><span class="wt">18K Gram Jewelry</span></td><td><span class="pc" id="g-jewelry18">—</span></td></tr>
         </tbody>
       </table>
@@ -367,7 +368,8 @@ function calc(spot1oz){
     gm15_55:g*15.55*1.0542, // promedio TD+SGB +10
     gm50:g*50*1.0078+80,
     gm100:g*100*1.0101, // promedio TD+SGB +10
-    jewelry:g+45, // 22K Gram Jewelry: gramo + $45 CAD
+    jewelry:g+55, // 22K Gram Jewelry: gramo + $55 CAD
+    jewelry21:g+45, // 21K Gram Jewelry: gramo + $45 CAD
     jewelry18:g+35, // 18K Gram Jewelry: gramo + $35 CAD
   };
 }
@@ -386,7 +388,7 @@ function render(goldBidCAD, silverBidCAD, fxRate){
   setTxt('g-7_75gm',C(p.gm7_75)); setTxt('g-7_8gm',C(p.gm7_8));
   setTxt('g-10_4gm',C(p.gm10_4)); setTxt('g-15_55gm',C(p.gm15_55));
   setTxt('g-50gm',C(p.gm50)); setTxt('g-100gm',C(p.gm100));
-  setTxt('g-jewelry',C(p.jewelry)); setTxt('g-jewelry18',C(p.jewelry18));
+  setTxt('g-jewelry',C(p.jewelry)); setTxt('g-jewelry21',C(p.jewelry21)); setTxt('g-jewelry18',C(p.jewelry18));
   setTxt('silver-big',C(silverBidCAD+15));
   document.querySelectorAll('.pc,.pp,.pch,.oz-card-price,.silver-big').forEach(el=>{el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');});
 }
