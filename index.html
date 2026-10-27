@@ -105,6 +105,8 @@ table.prices td:first-child { text-align:left; }
 /* Recuadros independientes para 22K y Gram Jewelry */
 .price-box { border:2px solid rgba(212,175,55,0.45); border-radius:12px; padding:14px 16px 8px; background:rgba(212,175,55,0.04); }
 .price-box + .price-box { margin-top:18px; }
+.prices-jewelry .wt { font-size:1.45rem; }
+.prices-jewelry td:first-child { width:62%; }
 .price-box table.prices tbody tr:last-child td { border-bottom:none; }
 .flash { animation:flashIn 0.5s ease; }
 @keyframes flashIn { 0%{opacity:0.2;} 60%{opacity:1;} 100%{opacity:1;} }
@@ -252,7 +254,7 @@ html.tema-d header { border-bottom:4px solid #5C3D10; }
         <div class="oz-card-price" id="g-1oz">—</div>
       </div>
       <div class="oz-card">
-        <div class="oz-card-left"><div class="oz-card-eyebrow">Gold · 1 Troy Ounce · Pamp / Diwali</div><div class="oz-card-footer">CAD · +$50</div></div>
+        <div class="oz-card-left"><div class="oz-card-eyebrow">Gold · 1 Troy Ounce · Pamp / Diwali / Maple Leaf</div><div class="oz-card-footer">CAD · +$50</div></div>
         <div class="oz-card-price" id="g-1oz-pamp" style="color:#E8C96A;">—</div>
       </div>
       <div class="oz-card silver-card">
@@ -298,9 +300,10 @@ html.tema-d header { border-bottom:4px solid #5C3D10; }
       <div class="price-box">
       <div class="table-22k-label gram-jewelry-label">Gram Jewelry</div>
       <table class="prices prices-jewelry">
-        <thead><tr><th>Weight</th><th>Price</th></tr></thead>
+        <thead><tr><th>Type</th><th>Per gram</th></tr></thead>
         <tbody>
-          <tr><td><span class="wt">1 gm</span></td><td><span class="pc" id="g-jewelry">—</span></td></tr>
+          <tr><td><span class="wt">22K Gram Jewelry</span></td><td><span class="pc" id="g-jewelry">—</span></td></tr>
+          <tr><td><span class="wt">18K Gram Jewelry</span></td><td><span class="pc" id="g-jewelry18">—</span></td></tr>
         </tbody>
       </table>
       </div>
@@ -343,25 +346,29 @@ function C(v){return '$'+v.toLocaleString('en-CA',{minimumFractionDigits:2,maxim
 
 function calc(spot1oz){
   const g=spot1oz/31.1;
+  // BORRADOR propuesta 27 oct 2026: promedio TD + Silver Gold Bull => g x peso x 1.0078 + 55
+  const F=w=>g*w*1.0078+55;
+  const s1=F(1), s2_5=F(2.5), s5=F(5), s10=F(10), s20=g*20*1.0299, s7_75=g*7.75*1.0711;
   return {
     oz1:spot1oz, oz1pamp:spot1oz+50,
-    gm1:g*0.41+g+2, gm1p:g*0.41+g+2+10, gm1c:g*0.41+g+2-10,
-    gm2:g*2*1.20, // 22K 2 gm: +20% (25 oct 2026; antes +27% -7)
-    gm2_5:g*2.5*0.19+g*2.5+50, gm2_5p:g*2.5*0.19+g*2.5+50+20,
-    gm4:g*4*1.13, // 22K 4 gm: +13% (antes +15% -14)
-    gm5:g*5*0.12+g*5-2, gm5p:g*5*0.12+g*5-2+10,
-    gm8:g*8*1.13, // 22K 8 gm: +13% (antes +15% -27)
-    gm10:g*10*0.0665+g*10-8, gm10p:g*10*0.0665+g*10-8+20,
-    gm20:g*20*0.05+g*20-16, gm20p:g*20*0.05+g*20-16+20,
-    gm1_55:g*1.55*0.45+g*1.55,
-    gm3_11:g*3.11*0.201+g*3.11+2,
-    gm7_75:g*7.75*0.124+g*7.75+7,
-    gm7_8:g*7.75*0.124+g*7.75+7+14,
-    gm10_4:g*10*0.0665+g*10-8+85,
-    gm15_55:g*15.55*0.115+g*15.55+8,
-    gm50:g*50+150,
-    gm100:g*100+150,
-    jewelry:g+45, // Gram Jewelry: precio del gramo (spot +2% ÷ 31.1) + $45 CAD
+    gm1:s1, gm1p:s1+10, gm1c:s1-10,
+    gm2:g*2*1.20, // 22K 2 gm: +20%
+    gm2_5:s2_5, gm2_5p:s2_5+20,
+    gm4:g*4*1.13, // 22K 4 gm: +13%
+    gm5:s5, gm5p:s5+28, // Pamp 5 gm: promedio alto TD+SGB +10
+    gm8:g*8*1.13, // 22K 8 gm: +13%
+    gm10:s10, gm10p:s10+26, // Pamp 10 gm: promedio alto TD+SGB +10
+    gm20:s20, gm20p:s20+20, // 20 gm: promedio TD+SGB +10
+    gm1_55:g*1.55*1.45*0.88, // hoy -12% (no la venden TD ni SGB)
+    gm3_11:F(3.11),
+    gm7_75:s7_75, // promedio TD+SGB +10
+    gm7_8:s7_75+14,
+    gm10_4:F(10.4),
+    gm15_55:g*15.55*1.0542, // promedio TD+SGB +10
+    gm50:g*50*1.0078+80,
+    gm100:g*100*1.0101, // promedio TD+SGB +10
+    jewelry:g+45, // 22K Gram Jewelry: gramo + $45 CAD
+    jewelry18:g+35, // 18K Gram Jewelry: gramo + $35 CAD
   };
 }
 function setTxt(id,v){const el=document.getElementById(id); if(el) el.textContent=v;}
@@ -379,7 +386,7 @@ function render(goldBidCAD, silverBidCAD, fxRate){
   setTxt('g-7_75gm',C(p.gm7_75)); setTxt('g-7_8gm',C(p.gm7_8));
   setTxt('g-10_4gm',C(p.gm10_4)); setTxt('g-15_55gm',C(p.gm15_55));
   setTxt('g-50gm',C(p.gm50)); setTxt('g-100gm',C(p.gm100));
-  setTxt('g-jewelry',C(p.jewelry));
+  setTxt('g-jewelry',C(p.jewelry)); setTxt('g-jewelry18',C(p.jewelry18));
   setTxt('silver-big',C(silverBidCAD+15));
   document.querySelectorAll('.pc,.pp,.pch,.oz-card-price,.silver-big').forEach(el=>{el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');});
 }
