@@ -29,13 +29,12 @@ html.vertical .header-spots { gap:22px; justify-content:space-evenly; }
 html.vertical .hspot { gap:8px; }
 html.vertical .oz-row { grid-template-columns:1fr; gap:12px; padding:14px 32px; }
 html.vertical .oz-card { padding:12px 26px; }
-html.vertical .oz-card-eyebrow { font-size:1.75rem; font-weight:800; letter-spacing:1.5px; line-height:1.2; }
-html.vertical .oz-card-footer { font-size:1rem; font-weight:700; }
+html.vertical .oz-card-eyebrow { font-size:1.45rem; font-weight:800; letter-spacing:1px; line-height:1.05; }
 html.vertical .tables-wrap { grid-template-columns:1fr 1fr; padding:14px 32px 12px; row-gap:18px; }
 html.vertical .table-col-main { grid-column:1 / -1; }
 html.vertical .table-col-22k { grid-column:1 / -1; display:grid; grid-template-columns:1fr 1fr; column-gap:24px; align-items:start; }
 html.vertical .price-box + .price-box { margin-top:0; }
-html.vertical table.prices td { padding:10.5px 4px; }
+html.vertical table.prices td { padding:12px 4px; }
 html.vertical .hspot-val { font-size:2.1rem; }
 html.vertical .hspot-label { font-size:1.6rem; }
 html.vertical .logo img { height:130px; }
@@ -106,7 +105,7 @@ table.prices td:first-child { text-align:left; }
 /* Recuadros independientes para 22K y Gram Jewelry */
 .price-box { border:2px solid rgba(212,175,55,0.45); border-radius:12px; padding:14px 16px 8px; background:rgba(212,175,55,0.04); }
 .price-box + .price-box { margin-top:18px; }
-.prices-jewelry .wt { font-size:1.45rem; }
+.prices-jewelry .wt { font-size:1.45rem; white-space:nowrap; }
 .prices-jewelry td:first-child { width:62%; }
 .price-box table.prices tbody tr:last-child td { border-bottom:none; }
 .flash { animation:flashIn 0.5s ease; }
@@ -375,6 +374,17 @@ function calc(spot1oz){
   };
 }
 function setTxt(id,v){const el=document.getElementById(id); if(el) el.textContent=v;}
+// Si en el TV algo no cabe en la pantalla, achica la letra un poco hasta que quepa
+// (asi el navegador del TV no reduce toda la pagina y deja un espacio vacio abajo).
+function fitApp(){
+  const a=document.querySelector('.app'), t=document.querySelector('.tables-wrap'), h=document.documentElement;
+  h.style.fontSize='';
+  let fs=parseFloat(getComputedStyle(h).fontSize);
+  const sobra=()=>a.scrollHeight>a.clientHeight+1||(t&&t.scrollHeight>t.clientHeight+1);
+  while(sobra() && fs>12){fs-=0.25; h.style.fontSize=fs+'px';}
+}
+window.addEventListener('resize',fitApp);
+window.addEventListener('load',fitApp);
 function render(goldBidCAD, silverBidCAD, fxRate){
   const spot1oz=goldBidCAD*1.02;
   const p=calc(spot1oz);
@@ -392,6 +402,7 @@ function render(goldBidCAD, silverBidCAD, fxRate){
   setTxt('g-jewelry',C(p.jewelry)); setTxt('g-jewelry21',C(p.jewelry21)); setTxt('g-jewelry18',C(p.jewelry18));
   setTxt('silver-big',C(silverBidCAD+15));
   document.querySelectorAll('.pc,.pp,.pch,.oz-card-price,.silver-big').forEach(el=>{el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');});
+  fitApp();
 }
 function setStatus(s,l){document.getElementById('status-dot').className='dot '+s;document.getElementById('status-label').textContent=l;}
 
