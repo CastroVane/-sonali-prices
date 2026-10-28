@@ -108,6 +108,10 @@ table.prices td:first-child { text-align:left; }
 .prices-jewelry .wt { font-size:1.45rem; white-space:nowrap; }
 .prices-jewelry td:first-child { width:62%; }
 .price-box table.prices tbody tr:last-child td { border-bottom:none; }
+/* Purchase Old Gold: ocupa todo el ancho, dividido en dos (debajo de 22K y de Gram Jewelry) */
+.old-gold-box { grid-column:1 / -1; }
+.old-gold-cols { display:grid; grid-template-columns:1fr 1fr; column-gap:24px; }
+.prices-oldgold td:first-child { width:40%; }
 .flash { animation:flashIn 0.5s ease; }
 @keyframes flashIn { 0%{opacity:0.2;} 60%{opacity:1;} 100%{opacity:1;} }
 #debug { position:fixed; bottom:0; left:0; right:0; max-height:130px; overflow-y:auto; background:rgba(0,0,0,0.92); border-top:2px solid #f59e0b; font-family:monospace; font-size:11px; line-height:1.5; padding:8px 14px; z-index:9999; color:#0f0; display:none; }
@@ -186,6 +190,14 @@ html.tema-d table.prices thead th { background:#5C3D10; color:#F5E1A4; }
 html.tema-d .table-22k-label { color:#5C3D10; }
 html.tema-d table.prices tbody tr:nth-child(even) td { background:rgba(201,150,43,0.12); }
 html.tema-d header { border-bottom:4px solid #5C3D10; }
+/* Vertical mas compacto para que quepa Purchase Old Gold (28 oct 2026) */
+html.vertical table.prices td { padding:6px 4px; }
+html.vertical table.prices th { padding-top:6px; padding-bottom:6px; }
+html.vertical .oz-row { gap:8px; padding:10px 32px; }
+html.vertical .oz-card { padding:8px 26px; }
+html.vertical .tables-wrap { row-gap:12px; padding:10px 32px 8px; }
+html.vertical .price-box { padding:10px 16px 4px; }
+html.vertical .table-22k-label { padding-bottom:6px; margin-bottom:6px; }
 </style>
 </head>
 <body>
@@ -309,6 +321,19 @@ html.tema-d header { border-bottom:4px solid #5C3D10; }
       </table>
       </div>
       </div>
+      <div class="price-box old-gold-box">
+      <div class="table-22k-label">Purchase Old Gold</div>
+      <div class="old-gold-cols">
+        <table class="prices prices-oldgold">
+          <thead><tr><th>Per gram</th><th>70%</th><th>80%</th></tr></thead>
+          <tbody id="og-left"></tbody>
+        </table>
+        <table class="prices prices-oldgold">
+          <thead><tr><th>Per gram</th><th>70%</th><th>80%</th></tr></thead>
+          <tbody id="og-right"></tbody>
+        </table>
+      </div>
+      </div>
       <div class="footer-note">Prices include Sonali markup · All prices in CAD · Subject to change without notice</div>
     </div>
   </div>
@@ -394,6 +419,17 @@ function fitApp(){
 }
 window.addEventListener('resize',fitApp);
 window.addEventListener('load',fitApp);
+// Purchase Old Gold: spot por gramo SIN el 2% (oro bid CAD / 31.1) x pureza (K/24) x 70% y 80%
+const OLD_GOLD_K=[24,23,22,21,18,16,14,12,10,9];
+(function(){
+  const row=k=>'<tr><td><span class="wt">'+k+'K gram</span></td><td><span class="pc" id="og-'+k+'-70">—</span></td><td><span class="pc" id="og-'+k+'-80">—</span></td></tr>';
+  document.getElementById('og-left').innerHTML=OLD_GOLD_K.slice(0,5).map(row).join('');
+  document.getElementById('og-right').innerHTML=OLD_GOLD_K.slice(5).map(row).join('');
+})();
+function renderOldGold(goldBidCAD){
+  const g=goldBidCAD/31.1;
+  OLD_GOLD_K.forEach(k=>{setTxt('og-'+k+'-70',C(g*k/24*0.70)); setTxt('og-'+k+'-80',C(g*k/24*0.80));});
+}
 function render(goldBidCAD, silverBidCAD, fxRate){
   const spot1oz=goldBidCAD*1.02;
   const p=calc(spot1oz);
@@ -410,6 +446,7 @@ function render(goldBidCAD, silverBidCAD, fxRate){
   setTxt('g-50gm',C(p.gm50)); setTxt('g-100gm',C(p.gm100));
   setTxt('g-jewelry',C(p.jewelry)); setTxt('g-jewelry21',C(p.jewelry21)); setTxt('g-jewelry18',C(p.jewelry18));
   setTxt('silver-big',C(silverBidCAD+15));
+  renderOldGold(goldBidCAD);
   document.querySelectorAll('.pc,.pp,.pch,.oz-card-price,.silver-big').forEach(el=>{el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');});
   fitApp();
 }
