@@ -112,6 +112,7 @@ table.prices td:first-child { text-align:left; }
 .old-gold-box { grid-column:1 / -1; }
 .old-gold-cols { display:grid; grid-template-columns:1fr 1fr; column-gap:24px; }
 .prices-oldgold td:first-child { width:40%; }
+.prices-oldgold th.th-between { text-align:center; }
 .flash { animation:flashIn 0.5s ease; }
 @keyframes flashIn { 0%{opacity:0.2;} 60%{opacity:1;} 100%{opacity:1;} }
 #debug { position:fixed; bottom:0; left:0; right:0; max-height:130px; overflow-y:auto; background:rgba(0,0,0,0.92); border-top:2px solid #f59e0b; font-family:monospace; font-size:11px; line-height:1.5; padding:8px 14px; z-index:9999; color:#0f0; display:none; }
@@ -325,11 +326,11 @@ html.vertical .table-22k-label { padding-bottom:6px; margin-bottom:6px; }
       <div class="table-22k-label">Purchase Old Gold</div>
       <div class="old-gold-cols">
         <table class="prices prices-oldgold">
-          <thead><tr><th>Per gram</th><th>70%</th><th>80%</th></tr></thead>
+          <thead><tr><th>Per gram</th><th colspan="2" class="th-between">Between</th></tr></thead>
           <tbody id="og-left"></tbody>
         </table>
         <table class="prices prices-oldgold">
-          <thead><tr><th>Per gram</th><th>70%</th><th>80%</th></tr></thead>
+          <thead><tr><th>Per gram</th><th colspan="2" class="th-between">Between</th></tr></thead>
           <tbody id="og-right"></tbody>
         </table>
       </div>
