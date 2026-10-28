@@ -270,7 +270,7 @@ html.vertical .table-22k-label { padding-bottom:6px; margin-bottom:6px; }
         <div class="oz-card-price" id="g-1oz-pamp" style="color:#E8C96A;">—</div>
       </div>
       <div class="oz-card silver-card">
-        <div class="oz-card-left"><div class="oz-card-eyebrow" style="color:rgba(220,220,220,0.9)">Silver · 1 Troy Ounce</div><div class="oz-card-footer" style="color:rgba(200,200,200,0.45)">CAD · +$15</div></div>
+        <div class="oz-card-left"><div class="oz-card-eyebrow" style="color:rgba(220,220,220,0.9)">Silver · 1 Troy Ounce</div><div class="oz-card-footer" style="color:rgba(200,200,200,0.45)">CAD · +$10</div></div>
         <div class="oz-card-price" id="silver-big" style="color:var(--silver2);">—</div>
       </div>
     </div>
@@ -445,7 +445,7 @@ function render(goldBidCAD, silverBidCAD, fxRate){
   setTxt('g-10_4gm',C(p.gm10_4)); setTxt('g-15_55gm',C(p.gm15_55));
   setTxt('g-50gm',C(p.gm50)); setTxt('g-100gm',C(p.gm100));
   setTxt('g-jewelry',C(p.jewelry)); setTxt('g-jewelry21',C(p.jewelry21)); setTxt('g-jewelry18',C(p.jewelry18));
-  setTxt('silver-big',C(silverBidCAD+15));
+  setTxt('silver-big',C(silverBidCAD+10));
   renderOldGold(goldBidCAD);
   document.querySelectorAll('.pc,.pp,.pch,.oz-card-price,.silver-big').forEach(el=>{el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');});
   fitApp();
