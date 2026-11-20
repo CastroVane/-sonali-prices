@@ -453,7 +453,7 @@ function render(goldBidCAD, silverBidCAD, fxRate){
 }
 function setStatus(s,l){document.getElementById('status-dot').className='dot '+s;document.getElementById('status-label').textContent=l;}
 
-// ── FX: Kraken / Coinbase en vivo (directo) → Yahoo (proxy) → Banco de Canada → diarias ──
+// ── FX: Coinbase / Kraken en vivo (directo) → Yahoo (proxy) → Banco de Canada → diarias ──
 let lastGold=null,lastSilver=null,lastFX=null,fxCounter=0,busy=false;
 const PROXY='https://api.allorigins.win/raw?url=';
 
@@ -472,13 +472,15 @@ async function tryFetch(url,useProxy){
 
 async function getFX(){
   // 2026-10-23: primero tasas EN VIVO que el navegador lee directo (CORS abierto):
-  // Kraken USD/CAD (mercado forex real, punto medio bid/ask) y Coinbase.
+  // Coinbase (tasa de mercado) y Kraken USD/CAD (punto medio bid/ask, solo si el mercado esta liquido).
   // Yahoo queda de respaldo porque necesita proxy y el proxy fallaba/colgaba.
   // Banco de Canada publica UNA tasa al dia (16:30 ET): durante el dia es la de ayer.
   // Las diarias se alejan 0.3-0.5% del mercado (~$15-20 CAD/oz en oro).
   const sources=[
-    {name:'Kraken en vivo', url:'https://api.kraken.com/0/public/Ticker?pair=USDCAD', pick:d=>{const r=d&&d.result&&Object.values(d.result)[0];return r&&(Number(r.b[0])+Number(r.a[0]))/2;}},
     {name:'Coinbase en vivo', url:'https://api.coinbase.com/v2/exchange-rates?currency=USD', pick:d=>d&&d.data&&d.data.rates&&Number(d.data.rates.CAD)},
+    // 2026-11-20: Kraken quedo con poco volumen (bid 1.3609 / ask 1.3735, real 1.4355) y bajo el oro ~$240/oz.
+    // Ahora va despues de Coinbase y solo se acepta si la diferencia bid/ask es menor a 0.2%.
+    {name:'Kraken en vivo', url:'https://api.kraken.com/0/public/Ticker?pair=USDCAD', pick:d=>{const r=d&&d.result&&Object.values(d.result)[0];if(!r) return null;const b=Number(r.b[0]),a=Number(r.a[0]);return (a-b)/b<0.002?(a+b)/2:null;}},
     {name:'Yahoo intradia', url:'https://query1.finance.yahoo.com/v8/finance/chart/CAD=X?interval=1m&range=1d', proxyOnly:true, pick:d=>d&&d.chart&&d.chart.result&&d.chart.result[0]&&d.chart.result[0].meta&&d.chart.result[0].meta.regularMarketPrice},
     {name:'Banco de Canada', url:'https://www.bankofcanada.ca/valet/observations/FXUSDCAD/json?recent=1', pick:d=>{const o=d&&d.observations&&d.observations[d.observations.length-1];return o&&o.FXUSDCAD&&Number(o.FXUSDCAD.v);}},
     {name:'fawazahmed0 diaria', url:'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json', pick:d=>d&&d.usd&&d.usd.cad},
